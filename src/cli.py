@@ -1,9 +1,12 @@
 """Command-line interface of the RAG system, exposed through Python Fire."""
 
+
 class RagCLI:
     """Commands to index the vLLM corpus, search it and answer questions."""
 
-    def index(...):
+    def index(self, max_chunk_size: int = 2000,
+              corpus_dir: str = "data/raw",
+              index_dir: str = "data/processed") -> None:
         """Chunk the corpus and persist the lexical index.
 
         Args:
@@ -12,7 +15,8 @@ class RagCLI:
             index_dir: Directory where the index files are written.
         """
 
-    def search(...):
+    def search(self, query: str, k: int = 10,
+               index_dir: str = "data/processed") -> None:
         """Print the top-k sources for a single query.
 
         Args:
@@ -21,7 +25,8 @@ class RagCLI:
             index_dir: Directory containing the index files.
         """
 
-    def search_dataset(...):
+    def search_dataset(self, dataset_path: str, save_directory: str,
+                       k: int = 10, index_dir: str = "data/processed") -> None:
         """Search every question of a dataset and save the results.
 
         Args:
@@ -32,7 +37,8 @@ class RagCLI:
             index_dir: Directory containing the index files.
         """
 
-    def answer(...):
+    def answer(self, query: str, k: int = 10,
+               index_dir: str = "data/processed") -> None:
         """Answer a single query from the retrieved context.
 
         Args:
@@ -41,7 +47,9 @@ class RagCLI:
             index_dir: Directory containing the index files.
         """
 
-    def answer_dataset(...):
+    def answer_dataset(self, student_search_results_path: str,
+                       save_directory: str,
+                       index_dir: str = "data/processed") -> None:
         """Generate answers for previously saved search results.
 
         Args:
@@ -51,7 +59,8 @@ class RagCLI:
             index_dir: Directory containing the index files.
         """
 
-    def evaluate(...):
+    def evaluate(self, student_search_results_path: str,
+                 dataset_path: str) -> None:
         """Report recall@k of search results against a ground-truth dataset.
 
         Args:

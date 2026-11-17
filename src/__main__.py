@@ -1,8 +1,8 @@
+"""
+Entry point: python -m src
+"""
 import fire
 from src.cli import RagCLI
-if __name__ == "main":
-    """
-    Entry point: python -m src
-    """
+if __name__ == "__main__":
 
-    fire.Fire(RagCLi)
+    fire.Fire(RagCLI)
