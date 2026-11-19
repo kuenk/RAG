@@ -64,8 +64,13 @@ def split_identifier(word: str) -> List[str]:
     Returns:
         The lowercase parts in order, without empty parts.
     """
-    raise NotImplementedError
+    parts = []
 
+    for piece in word.split("_"):
+        for part in split_camel_case(piece):
+            parts.append(part.lower())
+
+    return parts
 
 def normalize_plural(word: str) -> str:
     """Turn a simple English plural into its singular.
