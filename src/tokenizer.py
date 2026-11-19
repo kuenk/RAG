@@ -82,7 +82,9 @@ def normalize_plural(word: str) -> str:
         The word without its final "s" if it is longer than three
         characters and does not end in "ss"; otherwise the word unchanged.
     """
-    raise NotImplementedError
+    if len(word) > 3 and word.endswith("s") and not word.endswith("ss"):
+        return word[:-1]
+    return word
 
 
 def tokenize(text: str) -> List[str]:
@@ -98,8 +100,19 @@ def tokenize(text: str) -> List[str]:
     Returns:
         The tokens in order of appearance, repetitions included.
     """
-    raise NotImplementedError
 
+    tokens = []
+    for word in WORD_PATTERN.findall(text):
+        candidates = [word.lower()]
+        parts = split_identifier(word)
+        if len(parts) > 1:
+            candidates.extend(parts)
+
+        for candidate in candidates:
+            if candidate not in STOPWORDS:
+                tokens.append(normalize_plural(candidate))
+
+    return tokens
 
 def document_tokens(file_path: str, text: str) -> List[str]:
     """Return the tokens indexed for a chunk: its text plus its file path.
@@ -114,4 +127,6 @@ def document_tokens(file_path: str, text: str) -> List[str]:
     Returns:
         The tokens of the text followed by the tokens of the path.
     """
-    raise NotImplementedError
+    result = tokenize(text) + tokenize(file_path)
+
+    return result
